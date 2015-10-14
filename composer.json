@@ -1,0 +1,23 @@
+{
+  "name": "rammlerch/server",
+  "description": "Rammler.ch Server",
+  "type": "project",
+  "homepage": "https://github.com/rammlerch/server",
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "authors": [
+    {
+      "name": "Marcel Arnold",
+      "email": "mail@maesi.org"
+    }
+  ],
+    "autoload": {
+      "psr-4": {
+        "ch\\rammler\\": "src/"
+      }
+    },
+    "require": {
+      "slim/slim": "3.0.0-RC1",
+      "slim/http-cache": "0.3.0"
+    }
+}
