@@ -11,13 +11,14 @@
       "email": "mail@maesi.org"
     }
   ],
-    "autoload": {
-      "psr-4": {
-        "ch\\rammler\\": "src/"
-      }
-    },
+  "autoload": {
+    "psr-4": {
+      "ch\\rammler\\": "src/"
+    }
+  },
     "require": {
       "slim/slim": "3.0.0-RC1",
-      "slim/http-cache": "0.3.0"
+      "slim/http-cache": "0.3.0",
+      "simplon/mysql": "1.0.3"
     }
 }
