@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: maesi
- * Date: 06.11.15
- * Time: 15:47
- */
 
 namespace ch\rammler;
 

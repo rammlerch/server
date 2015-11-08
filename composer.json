@@ -16,9 +16,17 @@
       "ch\\rammler\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "ch\\rammler\\test\\": "test/"
+    }
+  },
     "require": {
       "slim/slim": "3.0.0-RC1",
       "slim/http-cache": "0.3.0",
       "simplon/mysql": "1.0.3"
-    }
+    },
+  "require-dev": {
+    "phpunit/phpunit": "4.6.*"
+  }
 }
