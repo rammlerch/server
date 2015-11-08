@@ -25,7 +25,7 @@ INSERT INTO `agenda` (`start`, `ende`, `name`, `ort`, `auftritt`, `link`, `highl
   ('2016-01-02', NULL, 'Fasnachtseröffnung', 'Schlierbach', '', '', 0, 5),
   ('2016-01-09', NULL, 'Joggeler-Nacht', 'Neudorf', '', '', 0, 5),
   ('2016-01-16', NULL, 'Tereter Nächt', 'St. Erhard', '', '', 0, 5),
-  ('2016-01-22', '2016-01-24', 'Hahnenkamm-Rennen', 'Kitzbühl', '', '', 0, 5),
+  ('2016-01-22', '2016-01-24', 'Hahnenkamm-Rennen', 'Kitzbühel', '', '', 0, 5),
   ('2016-01-30', NULL, 'Kinderfasnacht', 'MZH Schlierbach', '', '', 1, 5),
   ('2016-01-30', NULL, 'aBARtig', 'Triengen', '', '', 0, 7),
   ('2016-02-03', NULL, 'Rammlerball', 'MZH Schlierbach', '20:00', '', 1, 5),
