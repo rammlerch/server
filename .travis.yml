@@ -5,6 +5,7 @@ before_script:
 - composer update --no-dev
 after_success:
 - npm install gulp
+- npm update
 - gulp deploy --user $FTP_USER --password $FTP_PASSWORD
 notifications:
   email:
