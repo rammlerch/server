@@ -26,6 +26,6 @@ gulp.task('deploy', function() {
     ];
 
   gulp.src(globs, { base: '.', buffer: false })
-    .pipe(conn.newer('restftp'))
-    .pipe(conn.dest('restftp'));
+    .pipe(conn.newer('rest'))
+    .pipe(conn.dest('rest'));
 });
