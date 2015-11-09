@@ -36,13 +36,13 @@ class DateHelper {
 
             $to_arr = explode("-", $to);
             if($to_arr[0] != $arr[0]) {
-                return $day . ". " . DateHelper::getMonthFromIndex($arr[1], false) . " " . substr($arr[0], 2) . $split . $to_arr[2] . ". " . DateHelper::getMonthFromIndex($to_arr[1], false) . " " .substr($to_arr[0], 2);
+                return $day . ". " . DateHelper::getMonthFromIndex($arr[1], true) . " " . substr($arr[0], 2) . $split . $to_arr[2] . ". " . DateHelper::getMonthFromIndex($to_arr[1], false) . " " .substr($to_arr[0], 2);
             }
             if($to_arr[1] != $arr[1]) {
-                return $day . ". " . DateHelper::getMonthFromIndex($arr[1], false) . $split . $to_arr[2] . ". " . DateHelper::getMonthFromIndex($to_arr[1], false) . " " .$arr[0];
+                return $day . ". " . DateHelper::getMonthFromIndex($arr[1], true) . $split . $to_arr[2] . ". " . DateHelper::getMonthFromIndex($to_arr[1], false) . " " .$arr[0];
             }
 
-            return $day . $split . $to_arr[2] . ". " . DateHelper::getMonthFromIndex($arr[1], false) . " " . $arr[0];
+            return $day . $split . $to_arr[2] . ". " . DateHelper::getMonthFromIndex($arr[1], true) . " " . $arr[0];
         }
 
         return $day . ". " . $month . " " . $arr[0];
