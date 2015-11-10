@@ -16,7 +16,7 @@ class Register {
     private function initRoute() {
         $this->app->group('/ch/rammler/register', function () {
             $this->get('/', function ($request, $response, $args) {
-                $res = DB::instance()->fetchRowMany('SELECT id, name FROM instrument');
+                $res = DB::instance()->fetchRowMany('SELECT id, name FROM instrument order by id');
                 $response = $response->withHeader('Content-Type', 'application/json');
                 return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
             });
