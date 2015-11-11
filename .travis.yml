@@ -6,7 +6,7 @@ before_script:
 after_success:
 - npm install gulp
 - npm update
-- gulp deploy --user $FTP_USER --password $FTP_PASSWORD
+- gulp deploy --user $FTP_USER${TRAVIS_BRANCH} --password $FTP_PASSWORD${TRAVIS_BRANCH}
 notifications:
   email:
     on_success: never
