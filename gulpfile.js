@@ -9,10 +9,19 @@ var args = minimist(process.argv.slice(2));
 
 gulp.task('deploy', function() {
   var remotePath = '/restftp/';
+
+    if(args.branch == 'master') {
+        var user = args.user;
+        var password = args.password;
+    } else {
+        var user = args.user_sandbox;
+        var password = args.password_sandbox;
+    }
+
   var conn = ftp.create({
     host: 'ftp.rammler.ch',
-    user: args.user,
-    password: args.password,
+    user: user,
+    password: password,
     parallel: 1,
     log: gutil.log
   });
