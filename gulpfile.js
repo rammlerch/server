@@ -16,6 +16,7 @@ gulp.task('deploy', function() {
     parallel: 1,
     log: gutil.log
   });
+    gutil.log(args.user, gutil.colors.magenta('123'));
 
     var globs = [
         'images/**',
