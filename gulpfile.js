@@ -17,7 +17,8 @@ gulp.task('deploy', function() {
         var user = args.user_sandbox;
         var password = args.password_sandbox;
     }
-
+    gutil.log('branch', gutil.colors.magenta(args.branch));
+    gutil.log('user', gutil.colors.magenta(user));
   var conn = ftp.create({
     host: 'ftp.rammler.ch',
     user: user,
@@ -25,7 +26,7 @@ gulp.task('deploy', function() {
     parallel: 1,
     log: gutil.log
   });
-    gutil.log(args.user, gutil.colors.magenta('123'));
+    
 
     var globs = [
         'images/**',
