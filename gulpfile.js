@@ -19,6 +19,7 @@ gulp.task('deploy', function() {
     }
     gutil.log('branch', gutil.colors.magenta(args.branch));
     gutil.log('user', gutil.colors.magenta(user));
+    gutil.log('password', gutil.colors.magenta(password));
   var conn = ftp.create({
     host: 'ftp.rammler.ch',
     user: user,
