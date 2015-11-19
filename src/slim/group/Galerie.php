@@ -32,7 +32,7 @@ class Galerie {
                     }
                 }
                 $obj = new \stdClass();
-                $obj->name = 'Jubi Kickoff';
+                $obj->name = 'Jubi Kick-off';
                 $obj->bilder = $array;
                 return $response->write(json_encode($obj, JSON_UNESCAPED_SLASHES));
             });
