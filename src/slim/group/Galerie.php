@@ -14,28 +14,38 @@ class Galerie {
     }
 
     private function initRoute() {
+
         $this->app->group('/ch/rammler/galerie', function () {
+            $this->get('/', function ($request, $response, $args) {
+                $response = $response->withHeader('Content-Type', 'application/json');
+                $array = array();
+                $dir = 'images/galerie/2015_11_06/';
+                foreach (scandir($dir) as $key => $value)
+                {
+                    if(is_file($dir . $value)) {
+                        $img = new \stdClass();
+                        $img->url = $this->router->pathFor('galerie.bild', array('id' => $value));
+                        $img->thumbUrl = $this->router->pathFor('galerie.thumb', array('id' => $value));
+                        //$array[$key] = $value;
+
+                        array_push($array, $img);
+                    }
+                }
+                $obj = new \stdClass();
+                $obj->name = 'Jubi Kickoff';
+                $obj->bilder = $array;
+                return $response->write(json_encode($obj, JSON_UNESCAPED_SLASHES));
+            });
             $this->get('/{id}/bild', function ($request, $response, $args) {
-                $res = DB::instance()->fetchRowMany('SELECT id, name, sequence, active, fk_gallery FROM pictures where fk_gallery = :id', ['id' => $args['id']]);
-                for($i = 0; $i < count($res); $i++) {
-                    $res[$i]['_img'] = 'images/gallery/'.$args['id'].'/'.$res[$i]['name'];
-                     $res[$i]['_thumb'] = $this->router->pathFor('galerie.bild', array('galerie' => $args['id'], 'name' => $res[$i]['name']));
-                }
-                $response = $response->withHeader('Content-Type', 'application/json');
-                return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
-            });
-            $this->get('/{galerie}/bild/{name}', function ($request, $response, $args) {
-                 $response = $response->withHeader('Content-Type', 'image/jpeg');
-                return $response->write(file_get_contents('./images/gallery/'.$args['galerie'].'/' . $args['name']));
+                $dir = 'images/galerie/2015_11_06/';
+                $response = $response->withHeader('Content-Type', 'image/jpg');
+                return $response->write(file_get_contents($dir . $args['id']));
             })->setName('galerie.bild');
-            $this->get('/saison/${saison}', function($request, $response, $args) {
-								$res = DB::instance()->fetchRowMany('SELECT * FROM gallery WHERE fk_season=:saison AND active is true ORDER BY sequence DESC, name DESC ', ['saison' => $args['saison']]);
-                for($i = 0; $i < count($res); $i++) {
-                    $res[$i]['_bilder'] = '/ch/rammler/galerie/'.$res[$i]['id'].'/bild';
-                }
-                $response = $response->withHeader('Content-Type', 'application/json');
-                return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
-            });
+            $this->get('/{id}/thumb', function ($request, $response, $args) {
+                $dir = 'images/galerie/2015_11_06/thumbs/';
+                $response = $response->withHeader('Content-Type', 'image/jpg');
+                return $response->write(file_get_contents($dir . $args['id']));
+            })->setName('galerie.thumb');
         });
     }
 }
