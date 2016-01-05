@@ -11,6 +11,7 @@ new \ch\rammler\slim\group\Galerie($app);
 new \ch\rammler\slim\group\Register($app);
 new \ch\rammler\slim\group\Sponsor($app);
 new \ch\rammler\slim\group\Vorstand($app);
+new \ch\rammler\slim\group\RammlerDerWoche($app);
 
 // Run app
 $app->run();

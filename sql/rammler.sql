@@ -151,3 +151,40 @@ INSERT INTO vorstand (funktion, email, fk_mitglied, reihenfolge) VALUES
   ('Aktuarin', 'aktuar@rammler.ch', 36, 3),
   ('Kassier', 'kassier@rammler.ch', 6, 4),
   ('Materialwart', 'materialwart@rammler.ch', 7, 5);
+
+CREATE TABLE umfrage (
+  id    INT(4) UNSIGNED AUTO_INCREMENT,
+  titel VARCHAR(50) NOT NULL,
+  start TIMESTAMP,
+  ende  TIMESTAMP,
+  PRIMARY KEY (id)
+)
+  ENGINE = InnoDB;
+
+INSERT INTO umfrage (titel, start, ende) VALUES
+  ('Rammler der Woche 1', '2016-01-06 08:00:00', '2016-01-08 18:00:00'),
+  ('Rammler der Woche 2', '2016-01-13 08:00:00', '2016-01-15 18:00:00'),
+  ('Rammler der Woche 3', '2016-01-20 08:00:00', '2016-01-22 18:00:00'),
+  ('Rammler der Woche 4', '2016-01-27 08:00:00', '2016-01-29 18:00:00'),
+  ('Rammler der Woche 5', '2016-02-02 08:00:00', '2016-02-03 17:00:00');
+
+CREATE TABLE umfrage_eintrag (
+  id    INT(4) UNSIGNED AUTO_INCREMENT,
+  text VARCHAR(255) DEFAULT NULL,
+  foreign_id INT(4) UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (id)
+)
+  ENGINE = InnoDB;
+
+CREATE TABLE umfrage_stimme (
+  id    INT(4) UNSIGNED AUTO_INCREMENT,
+  ip  VARCHAR(20),
+  zeit TIMESTAMP DEFAULT NOW(),
+  fk_eintrag INT(4) UNSIGNED NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY (fk_eintrag)
+  REFERENCES umfrage_eintrag (id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+)
+  ENGINE = InnoDB;
