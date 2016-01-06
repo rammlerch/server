@@ -36,7 +36,7 @@ class VotingHelper {
             array_push($res['entries'], $res_stimme[$i]);
         }
         $res['totalStimmen'] = $stimmen_count;
-        $res['canVote'] = true;
+        $res['canVote'] = VotingHelper::canVote();
         return $res;
     }
 }
