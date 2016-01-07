@@ -17,8 +17,8 @@ class VotingHelper {
     }
 
     public static function getVote($voteId, $app) {
-        $res = DB::instance()->fetchRow('SELECT * FROM umfrage where id=:id', ['id' => $voteId]);
-        $res['canVote'] = VotingHelper::canVote();
+        $res = DB::instance()->fetchRow('SELECT id, titel, (start < now()) AS isStartet, (ende < now()) AS isEnded FROM umfrage where id=:id', ['id' => $voteId]);
+        $res['canVote'] = $res['isStartet'] && !$res['isEnded'] &&VotingHelper::canVote();
         $res['entries'] = array();
         $stimmen_count = 0;
         $sql = '
