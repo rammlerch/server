@@ -37,7 +37,7 @@ class RammlerDerWoche {
         $this->app->group('/ch/rammler/vote', function ($request, $response, $args) {
             $this->put('/{id}', function ($request, $response, $args) {
                 VotingHelper::vote($args['id']);
-                return $response->withStatus('204');
+                return $response->write(json_encode("", JSON_UNESCAPED_SLASHES));
             });
         });
     }
