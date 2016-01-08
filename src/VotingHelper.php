@@ -28,12 +28,21 @@ class VotingHelper {
           LEFT JOIN umfrage_stimme AS s ON e.id=s.fk_eintrag
           GROUP BY e.id
          ';
+        $max = 0;
+        $max_id = -1;
         $res_stimme = DB::instance()->fetchRowMany($sql);
         for($i = 0; $i < count($res_stimme); $i++) {
             $stimmen_count += $res_stimme[$i]['stimmen'];
             $res_stimme[$i]['thumbUrl'] = $app->router->pathFor('register.thumb', ['id' => $res_stimme[$i]['mid']]);
             $res_stimme[$i]['name'] = $res_stimme[$i]['vorname'] . " " . $res_stimme[$i]['nachname'];
+            if($max < $res_stimme[$i]['stimmen']) {
+                $max = $res_stimme[$i]['stimmen'];
+                $max_id = $res_stimme[$i]['id'];
+            }
             array_push($res['entries'], $res_stimme[$i]);
+        }
+        if($res['isEnded']) {
+            $res['winner'] = $res['entries'][$max_id];
         }
         $res['totalStimmen'] = $stimmen_count;
         $res['canVote'] = VotingHelper::canVote();
