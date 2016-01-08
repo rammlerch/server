@@ -11,6 +11,11 @@ class VotingHelper {
         }
     }
 
+    public static function nominate($payload) {
+            $data = array('text' => $payload['text'], 'ip' => $_SERVER['REMOTE_ADDR'], 'fk_umfrage' => $payload['umfrage'], 'fk_mitglied' => $payload['mitglied']);
+            DB::instance()->insert('umfrage_nomination', $data);
+    }
+
     public static function canVote() {
         $id = DB::instance()->fetchColumn('SELECT id FROM umfrage_stimme WHERE (ip=:ip AND zeit>DATE_SUB(NOW(),INTERVAL 60 MINUTE))', array('ip' => $_SERVER['REMOTE_ADDR']));
         return $id == null;
@@ -58,6 +63,7 @@ class VotingHelper {
     }
 
     public static function getActualNomination() {
-        return DB::instance()->fetchColumn('SELECT id FROM umfrage_nomination_zeit WHERE (NOW() > start AND  NOW() < ende)');
+        $array['id'] = DB::instance()->fetchColumn('SELECT id FROM umfrage_nomination_zeit WHERE (NOW() > start AND  NOW() < ende)');
+        return $array;
     }
 }
