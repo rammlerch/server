@@ -38,7 +38,13 @@ class RammlerDerWoche {
                 return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
             });
             $this->put('/nomination/aktuell', function ($request, $response, $args) {
-                VotingHelper::nominate($request->getParsedBody());
+                $data = $request->getParsedBody();
+                require_once 'rdw.password.php';
+                if($rdw_password != $data['passwort']) {
+                    $response = $response->withStatus(403);
+                } else {
+                    VotingHelper::nominate($request->getParsedBody());
+                }
                 return $response->write(json_encode("", JSON_UNESCAPED_SLASHES));
             });
         });
