@@ -166,7 +166,7 @@ INSERT INTO umfrage (titel, start, ende) VALUES
 
 CREATE TABLE umfrage_eintrag (
   id         INT(4) UNSIGNED AUTO_INCREMENT,
-  text       VARCHAR(255)    DEFAULT NULL,
+  text       VARCHAR(1024)    DEFAULT NULL,
   foreign_id INT(4) UNSIGNED DEFAULT NULL,
   PRIMARY KEY (id)
 )
@@ -187,7 +187,7 @@ CREATE TABLE umfrage_stimme (
 
 CREATE TABLE umfrage_nomination (
   id          INT(4) UNSIGNED AUTO_INCREMENT,
-  text        VARCHAR(255)    NOT NULL,
+  text        VARCHAR(1024)    NOT NULL,
   datum       TIMESTAMP       DEFAULT NOW(),
   ip          VARCHAR(20),
   fk_umfrage  INT(4) UNSIGNED NOT NULL,
