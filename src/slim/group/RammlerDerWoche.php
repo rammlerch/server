@@ -25,6 +25,13 @@ class RammlerDerWoche {
                 $response = $response->withHeader('Content-Type', 'application/json');
                 return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
             });
+            $this->get('/nomination/aktuell', function ($request, $response, $args) {
+
+                $res = VotingHelper::getActualNomination();
+
+                $response = $response->withHeader('Content-Type', 'application/json');
+                return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
+            });
         });
 
         $this->app->group('/ch/rammler/vote', function ($request, $response, $args) {

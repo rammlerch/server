@@ -55,5 +55,12 @@ class Register {
                 return $response->write(file_get_contents('./images/mitglied/small/default.png'));
             })->setName('register.thumb');
         });
+        $this->app->group('/ch/rammler/mitglied', function () {
+            $this->get('/', function ($request, $response, $args) {
+                $res = DB::instance()->fetchRowMany('SELECT m.id, m.vorname, m.nachname FROM mitglied as m ORDER BY m.vorname, m.nachname');
+                $response = $response->withHeader('Content-Type', 'application/json');
+                return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
+            });
+        });
     }
 }

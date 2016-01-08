@@ -39,4 +39,8 @@ class VotingHelper {
         $res['canVote'] = true;
         return $res;
     }
+
+    public static function getActualNomination() {
+        return DB::instance()->fetchColumn('SELECT id FROM umfrage_nomination_zeit WHERE (NOW() > start AND  NOW() < ende)');
+    }
 }

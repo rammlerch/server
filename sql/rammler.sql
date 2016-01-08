@@ -39,10 +39,6 @@ INSERT INTO `agenda` (`start`, `ende`, `name`, `ort`, `auftritt`, `link`, `highl
   ('2016-02-09', NULL, 'Umzug / Uslompete', 'Triengen', '', '', 0, 5);
 
 
-
-
-
-
 CREATE TABLE instrument (
   id   INT(4) UNSIGNED AUTO_INCREMENT,
   name VARCHAR(30) NOT NULL,
@@ -169,22 +165,62 @@ INSERT INTO umfrage (titel, start, ende) VALUES
   ('Rammler der Woche 5', '2016-02-02 08:00:00', '2016-02-03 17:00:00');
 
 CREATE TABLE umfrage_eintrag (
-  id    INT(4) UNSIGNED AUTO_INCREMENT,
-  text VARCHAR(255) DEFAULT NULL,
+  id         INT(4) UNSIGNED AUTO_INCREMENT,
+  text       VARCHAR(255)    DEFAULT NULL,
   foreign_id INT(4) UNSIGNED DEFAULT NULL,
   PRIMARY KEY (id)
 )
   ENGINE = InnoDB;
 
 CREATE TABLE umfrage_stimme (
-  id    INT(4) UNSIGNED AUTO_INCREMENT,
-  ip  VARCHAR(20),
-  zeit TIMESTAMP DEFAULT NOW(),
+  id         INT(4) UNSIGNED AUTO_INCREMENT,
+  ip         VARCHAR(20),
+  zeit       TIMESTAMP       DEFAULT NOW(),
   fk_eintrag INT(4) UNSIGNED NOT NULL,
-  PRIMARY KEY(id),
+  PRIMARY KEY (id),
   FOREIGN KEY (fk_eintrag)
   REFERENCES umfrage_eintrag (id)
     ON UPDATE CASCADE
     ON DELETE RESTRICT
 )
   ENGINE = InnoDB;
+
+CREATE TABLE umfrage_nomination (
+  id          INT(4) UNSIGNED AUTO_INCREMENT,
+  text        VARCHAR(255)    NOT NULL,
+  datum       TIMESTAMP       DEFAULT NOW(),
+  ip          VARCHAR(20),
+  fk_umfrage  INT(4) UNSIGNED NOT NULL,
+  fk_mitglied INT(4) UNSIGNED NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (fk_umfrage)
+  REFERENCES umfrage (id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT,
+  FOREIGN KEY (fk_mitglied)
+  REFERENCES mitglied (id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+)
+  ENGINE = InnoDB;
+
+
+CREATE TABLE umfrage_nomination_zeit (
+  id         INT(4) UNSIGNED AUTO_INCREMENT,
+  start      TIMESTAMP,
+  ende       TIMESTAMP,
+  fk_umfrage INT(4) UNSIGNED NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (fk_umfrage)
+  REFERENCES umfrage (id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+)
+  ENGINE = InnoDB;
+
+
+INSERT INTO umfrage_nomination_zeit (start, ende, fk_umfrage) VALUES
+  ('2016-01-10 08:00:00', '2016-01-12 18:00:00', 2),
+  ('2016-01-17 08:00:00', '2016-01-19 18:00:00', 3),
+  ('2016-01-24 08:00:00', '2016-01-26 18:00:00', 4),
+  ('2016-01-31 08:00:00', '2016-02-01 18:00:00', 5);
