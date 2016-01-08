@@ -2,8 +2,6 @@
 namespace ch\rammler\slim\group;
 
 
-use ch\rammler\DateHelper;
-use ch\rammler\DB;
 use ch\rammler\VotingHelper;
 use Slim\App;
 
@@ -21,6 +19,13 @@ class RammlerDerWoche {
             $this->get('/{id}', function ($request, $response, $args) {
 
                 $res = VotingHelper::getVote($args['id'], $this);
+
+                $response = $response->withHeader('Content-Type', 'application/json');
+                return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
+            })->setName('rdw');
+            $this->get('/', function ($request, $response, $args) {
+
+                $res = VotingHelper::getVoteList($this);
 
                 $response = $response->withHeader('Content-Type', 'application/json');
                 return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
