@@ -15,6 +15,11 @@ class Galerie {
 
     private function initRoute() {
         $this->app->group('/ch/rammler/galerie', function () {
+            $this->get('/', function ($request, $response, $args) {
+                $res = DB::instance()->fetchRowMany('SELECT g.id, g.name, g.ort, count(b.id) AS bilder FROM galerie AS g LEFT JOIN bild AS b ON g.id=b.fk_galerie GROUP BY g.id ORDER BY g.datum DESC');
+                $response = $response->withHeader('Content-Type', 'application/json');
+                return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
+            });
             $this->get('/{id}', function ($request, $response, $args) {
                 $response = $response->withHeader('Content-Type', 'application/json');
                 $res = DB::instance()->fetchRow('SELECT id, name FROM galerie WHERE id=:id', ['id' => $args['id']]);
@@ -25,7 +30,7 @@ class Galerie {
                 }
                 $res['bilder'] = $res_bilder;
                 return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
-            });
+            })->setName('galerie');
             $this->get('/{galerie}/bild/{name}', function ($request, $response, $args) {
                 $image = '../galerie/' . $args['galerie'] . '/' . $args['name'] . '.jpg';
                 $response = $response->withHeader('Content-Type', 'image/jpg');
