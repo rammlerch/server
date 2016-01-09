@@ -1,6 +1,7 @@
 <?php
 namespace ch\rammler\slim\group;
 
+use ch\rammler\DB;
 use Slim\App;
 
 class Galerie {
@@ -13,35 +14,29 @@ class Galerie {
     }
 
     private function initRoute() {
-
         $this->app->group('/ch/rammler/galerie', function () {
             $this->get('/{id}', function ($request, $response, $args) {
                 $response = $response->withHeader('Content-Type', 'application/json');
-                $array = array();
-                $dir = 'images/galerie/2015_11_06/';
-                foreach (scandir($dir) as $key => $value) {
-                    if (is_file($dir . $value)) {
-                        $img = new \stdClass();
-                        $img->url = $this->router->pathFor('galerie.bild', array('id' => $value));
-                        $img->thumbUrl = $this->router->pathFor('galerie.thumb', array('id' => $value));
-                        array_push($array, $img);
-                    }
+                $res = DB::instance()->fetchRow('SELECT id, name FROM galerie WHERE id=:id', ['id' => $args['id']]);
+                $res_bilder = DB::instance()->fetchRowMany('SELECT id, name FROM bild WHERE fk_galerie=:id', ['id' => $res['id']]);
+                for($i = 0; $i < count($res_bilder); $i++) {
+                    $res_bilder[$i]['url'] = $this->router->pathFor('galerie.bild', ['galerie' => $res['id'],'name' => $res_bilder[$i]['name']]);
+                    $res_bilder[$i]['thumbUrl'] = $this->router->pathFor('galerie.thumb', ['galerie' => $res['id'], 'name' => $res_bilder[$i]['name']]);
                 }
-                $obj = new \stdClass();
-                $obj->name = 'Jubi Kick-off';
-                $obj->bilder = $array;
-                return $response->write(json_encode($obj, JSON_UNESCAPED_SLASHES));
+                $res['bilder'] = $res_bilder;
+                return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
             });
-            $this->get('/{id}/bild', function ($request, $response, $args) {
-                $dir = 'images/galerie/2015_11_06/';
+            $this->get('/{galerie}/bild/{name}', function ($request, $response, $args) {
+                $image = '../galerie/' . $args['galerie'] . '/' . $args['name'] . '.jpg';
                 $response = $response->withHeader('Content-Type', 'image/jpg');
-                return $response->write(file_get_contents($dir . $args['id']));
+                return $response->write(file_get_contents($image));
             })->setName('galerie.bild');
-            $this->get('/{id}/thumb', function ($request, $response, $args) {
-                $dir = 'images/galerie/2015_11_06/thumbs/';
+            $this->get('/{galerie}/thumb/{name}', function ($request, $response, $args) {
+                $image = '../galerie/' . $args['galerie'] . '/thumbs/' . $args['name'] . '.jpg';
                 $response = $response->withHeader('Content-Type', 'image/jpg');
-                return $response->write(file_get_contents($dir . $args['id']));
+                return $response->write(file_get_contents($image));
             })->setName('galerie.thumb');
+
         });
     }
 }
