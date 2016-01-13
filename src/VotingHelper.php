@@ -31,7 +31,7 @@ class VotingHelper {
 
     public static function getVote($voteId, $app) {
         $res = DB::instance()->fetchRow('SELECT id, titel, (start < now()) AS isStartet, (ende < now()) AS isEnded FROM umfrage where id=:id', ['id' => $voteId]);
-        $res['canVote'] = $res['isStartet'] && !$res['isEnded'] &&VotingHelper::canVote();
+        $res['canVote'] = $res['isStartet'] && !$res['isEnded'] && VotingHelper::canVote();
         $res['entries'] = array();
         $stimmen_count = 0;
         $sql = '
@@ -39,11 +39,12 @@ class VotingHelper {
           FROM umfrage_eintrag AS e
           INNER JOIN mitglied AS m ON e.foreign_id = m.id
           LEFT JOIN umfrage_stimme AS s ON e.id=s.fk_eintrag
+          WHERE e.fk_umfrage=:umfrage
           GROUP BY e.id
          ';
         $max = 0;
         $max_id = -1;
-        $res_stimme = DB::instance()->fetchRowMany($sql);
+        $res_stimme = DB::instance()->fetchRowMany($sql, ['umfrage' => $voteId]);
         for($i = 0; $i < count($res_stimme); $i++) {
             $stimmen_count += $res_stimme[$i]['stimmen'];
             $res_stimme[$i]['thumbUrl'] = $app->router->pathFor('register.thumb', ['id' => $res_stimme[$i]['mid']]);
@@ -58,7 +59,6 @@ class VotingHelper {
             $res['winner'] = $res['entries'][$max_id];
         }
         $res['totalStimmen'] = $stimmen_count;
-        $res['canVote'] = VotingHelper::canVote();
         return $res;
     }
 
