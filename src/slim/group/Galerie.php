@@ -20,6 +20,14 @@ class Galerie {
                 $response = $response->withHeader('Content-Type', 'application/json');
                 return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
             });
+            $this->get('/aktiv', function ($request, $response, $args) {
+                $res = DB::instance()->fetchRowMany('SELECT g.id, g.name, g.ort, b.name AS bild_name FROM galerie AS g LEFT JOIN bild AS b ON g.id=b.fk_galerie WHERE b.id > 0 GROUP BY g.id ORDER BY g.datum DESC');
+                $response = $response->withHeader('Content-Type', 'application/json');
+                for($i = 0; $i < count($res); $i++) {
+                    $res[$i]['thumbUrl'] = $this->router->pathFor('galerie.thumb', ['galerie' => $res[$i]['id'], 'name' => $res[$i]['bild_name']]);
+                }
+                return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
+            });
             $this->get('/{id}', function ($request, $response, $args) {
                 $response = $response->withHeader('Content-Type', 'application/json');
                 $res = DB::instance()->fetchRow('SELECT id, name FROM galerie WHERE id=:id', ['id' => $args['id']]);
