@@ -34,7 +34,7 @@ class VotingHelper {
         for($i = 0; $i < count($res); $i++) {
             $res[$i]['rel'] = $app->router->pathFor('rdw', ['id' => $res[$i]['id']]);
             if($res[$i]['isEnded']) {
-                $res[$i]['sieger'] = VotingHelper::getWinner($res[$i]['id'], $app);
+                $res[$i]['sieger'] = VotingHelper::getWinner($res[$i]['foreign_id'], $app);
             }
         }
         return $res;
