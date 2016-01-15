@@ -16,7 +16,7 @@ class RammlerDerWoche {
 
     private function initRoute() {
         $this->app->group('/ch/rammler/rdw', function () {
-            $this->get('/{id}', function ($request, $response, $args) {
+            $this->get('/{id:[0-9]+}', function ($request, $response, $args) {
 
                 $res = VotingHelper::getVote($args['id'], $this);
 
@@ -26,6 +26,13 @@ class RammlerDerWoche {
             $this->get('/', function ($request, $response, $args) {
 
                 $res = VotingHelper::getVoteList($this);
+
+                $response = $response->withHeader('Content-Type', 'application/json');
+                return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
+            });
+            $this->get('/aktiv', function ($request, $response, $args) {
+
+                $res = VotingHelper::getActiveVoteList($this);
 
                 $response = $response->withHeader('Content-Type', 'application/json');
                 return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
