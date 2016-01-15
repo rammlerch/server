@@ -34,7 +34,7 @@ class VotingHelper {
         for($i = 0; $i < count($res); $i++) {
             $res[$i]['rel'] = $app->router->pathFor('rdw', ['id' => $res[$i]['id']]);
             if($res[$i]['isEnded']) {
-                $res[$i]['sieger'] = VotingHelper::getWinner($res[$i]['foreign_id'], $app);
+                $res[$i]['sieger'] = VotingHelper::getWinner($res[$i]['id'], $app);
             }
         }
         return $res;
@@ -42,7 +42,7 @@ class VotingHelper {
 
     private static function getWinner($id, $app) {
         $res = DB::instance()->fetchRow('SELECT e.*, count(s.id) AS stimmen FROM umfrage_eintrag AS e LEFT JOIN umfrage_stimme AS s ON e.id=s.fk_eintrag WHERE e.fk_umfrage=:id GROUP BY e.id ORDER BY stimmen DESC LIMIT 1',  ['id' => $id]);
-        $res['thumbUrl'] = $app->router->pathFor('register.thumb', ['id' => $res['id']]);
+        $res['thumbUrl'] = $app->router->pathFor('register.thumb', ['id' => $res['foreign_id']]);
         return $res;
     }
 
