@@ -18,7 +18,7 @@ class Agenda {
     private function initRoute() {
         $this->app->group('/ch/rammler/agenda', function () {
             $this->get('/', function ($request, $response, $args) {
-                $res = DB::instance()->fetchRowMany('SELECT id, name, ort, start, ende, auftritt, highlight FROM agenda where start > SUBDATE(NOW(), 1) AND (ende > SUBDATE(NOW(), 1) OR ende IS NULL) order by start, ende');
+                $res = DB::instance()->fetchRowMany('SELECT id, name, ort, start, ende, auftritt, highlight FROM agenda where start > SUBDATE(NOW(), 1) AND (ende > SUBDATE(NOW(), 1) OR ende IS NULL) order by start, ende, ordnung');
                 for($i = 0; $i < count($res); $i++) {
                     $res[$i]['datum'] = DateHelper::getAgendaDate($res[$i]['start'], $res[$i]['ende']);
                     $res[$i]['link'] = $this->router->pathFor('agenda.entry', ['id' => $res[$i]['id']]);
