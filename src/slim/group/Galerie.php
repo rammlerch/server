@@ -31,7 +31,7 @@ class Galerie {
             $this->get('/{id}', function ($request, $response, $args) {
                 $response = $response->withHeader('Content-Type', 'application/json');
                 $res = DB::instance()->fetchRow('SELECT id, name FROM galerie WHERE id=:id', ['id' => $args['id']]);
-                $res_bilder = DB::instance()->fetchRowMany('SELECT id, name FROM bild WHERE fk_galerie=:id ORDER BY datum DESC', ['id' => $res['id']]);
+                $res_bilder = DB::instance()->fetchRowMany('SELECT id, name FROM bild WHERE fk_galerie=:id ORDER BY datum ASC', ['id' => $res['id']]);
                 for($i = 0; $i < count($res_bilder); $i++) {
                     $res_bilder[$i]['url'] = $this->router->pathFor('galerie.bild', ['galerie' => $res['id'],'name' => $res_bilder[$i]['name']]);
                     $res_bilder[$i]['thumbUrl'] = $this->router->pathFor('galerie.thumb', ['galerie' => $res['id'], 'name' => $res_bilder[$i]['name']]);
