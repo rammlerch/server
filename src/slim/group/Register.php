@@ -57,10 +57,27 @@ class Register {
         });
         $this->app->group('/ch/rammler/mitglied', function () {
             $this->get('/', function ($request, $response, $args) {
+                // TODO: $res = DB::instance()->fetchRowMany('SELECT m.id, m.vorname, m.nachname FROM mitglied as m ORDER BY m.nachname, m.vorname');
                 $res = DB::instance()->fetchRowMany('SELECT m.id, m.vorname, m.nachname FROM mitglied as m ORDER BY m.vorname, m.nachname');
                 $response = $response->withHeader('Content-Type', 'application/json');
                 return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
             });
+            $this->get('/bild/{id}', function ($request, $response, $args) {
+                if(file_exists('./images/mitglied/1617/'.$args['id'].'.jpg')) {
+                    $response = $response->withHeader('Content-Type', 'image/jpeg');
+                    return $response->write(file_get_contents('./images/mitglied/1617/'.$args['id'].'.jpg'));
+                }
+                $response = $response->withHeader('Content-Type', 'image/png');
+                return $response->write(file_get_contents('./images/mitglied/default.png'));
+            })->setName('mitglied.bild');
+            $this->get('/thumb/{id}', function ($request, $response, $args) {
+                if(file_exists('./images/mitglied/1617/thumbs/'.$args['id'].'.jpg')) {
+                    $response = $response->withHeader('Content-Type', 'image/jpeg');
+                    return $response->write(file_get_contents('./images/mitglied/1617/thumbs/'.$args['id'].'.jpg'));
+                }
+                $response = $response->withHeader('Content-Type', 'image/png');
+                return $response->write(file_get_contents('./images/mitglied/small/default.png'));
+            })->setName('mitglied.thumb');
         });
     }
 }

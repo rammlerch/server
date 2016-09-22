@@ -28,14 +28,28 @@ class Mitgliederportrait {
         $this->app->group('/ch/rammler/mitgliederportrait', function () {
             $this->get('/', function ($request, $response, $args) {
                 $res = DB::instance()->fetchRowMany(Mitgliederportrait::$mitgliederportrait_sql . ' WHERE m.id NOT IN (6, 19, 20, 26, 32)');
+                for($i = 0; $i < count($res); $i++) {
+                    $res[$i]['thumb'] = $this->router->pathFor('mitglied.thumb', ['id' => $res[$i]['id']]);
+                    $res[$i]['detail'] = $this->router->pathFor('mitgliederportrait', ['id' => $res[$i]['id']]);
+                }
                 $response = $response->withHeader('Content-Type', 'application/json');
                 return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
             });
             $this->get('/{id:[0-9]+}', function ($request, $response, $args) {
                 $res = DB::instance()->fetchRow(Mitgliederportrait::$mitgliederportrait_sql . ' WHERE m.id=:id', ['id' => $args['id']]);
+
+                $res['fragebogen'] = DB::instance()->fetchRowMany(
+                    'SELECT f.frage, a.antwort FROM mitgliederportrait_frage AS f 
+                    INNER JOIN mitgliederportrait_antwort AS a ON f.id=a.fk_frage
+                    WHERE fk_saison=1 AND fk_mitglied=:id
+                    ORDER BY f.id;'
+                    , ['id' => $args['id']]);
+
+                $res['image'] = $this->router->pathFor('mitglied.bild', ['id' => $res['id']]);
+
                 $response = $response->withHeader('Content-Type', 'application/json');
                 return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
-            });
+            })->setName('mitgliederportrait');
             $this->get('/fragen', function ($request, $response, $args) {
                 $res = DB::instance()->fetchRowMany('SELECT * FROM mitgliederportrait_frage');
                 $response = $response->withHeader('Content-Type', 'application/json');
