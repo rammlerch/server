@@ -29,7 +29,8 @@ class Mitgliederportrait {
             $this->get('/', function ($request, $response, $args) {
                 $res = DB::instance()->fetchRowMany(Mitgliederportrait::$mitgliederportrait_sql . ' WHERE m.id NOT IN (6, 19, 20, 26, 32)');
                 for($i = 0; $i < count($res); $i++) {
-                    $res[$i]['thumb'] = $this->router->pathFor('mitglied.thumb', ['id' => $res[$i]['id']]);
+                    $id_lr = $res[$i]['id'] + ($i%2 == 0 ? "r" : "l");
+                    $res[$i]['thumb'] = $this->router->pathFor('mitglied.thumb', ['id' => $id_lr]);
                     $res[$i]['detail'] = $this->router->pathFor('mitgliederportrait', ['id' => $res[$i]['id']]);
                 }
                 $response = $response->withHeader('Content-Type', 'application/json');
