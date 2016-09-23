@@ -31,7 +31,7 @@ class Mitgliederportrait {
                 for($i = 0; $i < count($res); $i++) {
                     $type = $i%2 == 0 ? "r" : "l";
                     $res[$i]['thumb'] = $this->router->pathFor('mitglied.bild.small', ['id' => $res[$i]['id'], 'type' => $type]);
-                    $res[$i]['detail'] = $this->router->pathFor('mitgliederportrait', ['id' => $res[$i]['id']]);
+                    $res[$i]['type'] = $type;
                 }
                 $response = $response->withHeader('Content-Type', 'application/json');
                 return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));

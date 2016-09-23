@@ -63,7 +63,7 @@ class Register {
                 return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
             });
             $this->get('/bild/{id}/{type}', function ($request, $response, $args) {
-                $img = $args['id'] . $args['type'] . 'jpg';
+                $img = $args['id'] . $args['type'] . '.jpg';
                 if(file_exists('./images/mitglied/1617/'.$img)) {
                     $response = $response->withHeader('Content-Type', 'image/jpeg');
                     return $response->write(file_get_contents('./images/mitglied/1617/'.$img));
@@ -72,7 +72,7 @@ class Register {
                 return $response->write(file_get_contents('./images/mitglied/default.png'));
             })->setName('mitglied.bild');
             $this->get('/bild/{id}/{type}/small', function ($request, $response, $args) {
-                $img = $args['id'] . $args['type'] . 'jpg';
+                $img = $args['id'] . $args['type'] . '.jpg';
                 if(file_exists('./images/mitglied/1617/small/'.$img)) {
                     $response = $response->withHeader('Content-Type', 'image/jpeg');
                     return $response->write(file_get_contents('./images/mitglied/1617/small/'.$img));
