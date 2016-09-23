@@ -29,14 +29,14 @@ class Mitgliederportrait {
             $this->get('/', function ($request, $response, $args) {
                 $res = DB::instance()->fetchRowMany(Mitgliederportrait::$mitgliederportrait_sql . ' WHERE m.id NOT IN (6, 19, 20, 26, 32)');
                 for($i = 0; $i < count($res); $i++) {
-                    $id_lr = $res[$i]['id'] + ($i%2 == 0 ? "r" : "l");
-                    $res[$i]['thumb'] = $this->router->pathFor('mitglied.thumb', ['id' => $id_lr]);
+                    $type = $i%2 == 0 ? "r" : "l";
+                    $res[$i]['thumb'] = $this->router->pathFor('mitglied.bild.small', ['id' => $res[$i]['id'], 'type' => $type]);
                     $res[$i]['detail'] = $this->router->pathFor('mitgliederportrait', ['id' => $res[$i]['id']]);
                 }
                 $response = $response->withHeader('Content-Type', 'application/json');
                 return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
             });
-            $this->get('/{id:[0-9]+}', function ($request, $response, $args) {
+            $this->get('/{id:[0-9]+}/{type:[lr]}', function ($request, $response, $args) {
                 $res = DB::instance()->fetchRow(Mitgliederportrait::$mitgliederportrait_sql . ' WHERE m.id=:id', ['id' => $args['id']]);
 
                 $res['fragebogen'] = DB::instance()->fetchRowMany(
@@ -46,7 +46,7 @@ class Mitgliederportrait {
                     ORDER BY f.id;'
                     , ['id' => $args['id']]);
 
-                $res['image'] = $this->router->pathFor('mitglied.bild', ['id' => $res['id']]);
+                $res['image'] = $this->router->pathFor('mitglied.bild', ['id' => $res['id'], 'type' => $args['type']]);
 
                 $response = $response->withHeader('Content-Type', 'application/json');
                 return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
