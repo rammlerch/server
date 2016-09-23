@@ -16,7 +16,7 @@ UPDATE vorstand SET fk_mitglied=46 WHERE reihenfolge=4; # Kassier Sabi
 
 UPDATE mitglied SET fk_status=4 WHERE id IN (6, 19, 20, 26, 32); # Austritte
 
-UPDATE mitglied SET fk_status=3  WHERE id=48; # Nico
+UPDATE mitglied SET fk_status=3  WHERE id=48; # Denis
 UPDATE mitglied SET fk_status=3  WHERE id=50; # Prisi
 
 UPDATE mitglied SET fk_status=2, fk_instrument=1 WHERE id=51; # Eliane
