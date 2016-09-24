@@ -39,6 +39,9 @@ class Register {
                     $res[$i]['name'] = $res[$i]['vorname'] . " " . $res[$i]['nachname'];
                     $res[$i]['url'] = $this->router->pathFor('register.bild', ['id' => $res[$i]['id']]);
                     $res[$i]['thumbUrl'] = $this->router->pathFor('register.thumb', ['id' => $res[$i]['id']]);
+                    $type = $i%2 == 0 ? "r" : "l";
+                    $res[$i]['thumb'] = $this->router->pathFor('mitglied.bild.small', ['id' => $res[$i]['id'], 'type' => $type]);
+                    $res[$i]['type'] = $type;
                 }
                 $response = $response->withHeader('Content-Type', 'application/json');
                 return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
