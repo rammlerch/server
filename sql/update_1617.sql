@@ -32,7 +32,7 @@ INSERT INTO mitgliederportrait_antwort (antwort, fk_frage, fk_mitglied) VALUES (
 INSERT INTO mitgliederportrait_antwort (antwort, fk_frage, fk_mitglied) VALUES ('ha fasch ke ziit zom hongere', 5, 8);
 
 INSERT INTO mitgliederportrait_antwort (antwort, fk_frage, fk_mitglied) VALUES ('MvB', 1, 1);
-INSERT INTO mitgliederportrait_antwort (antwort, fk_frage, fk_mitglied) VALUES ('', 2, 1);
+INSERT INTO mitgliederportrait_antwort (antwort, fk_frage, fk_mitglied) VALUES ('s biertrenkende Rammlerschof', 2, 1);
 INSERT INTO mitgliederportrait_antwort (antwort, fk_frage, fk_mitglied) VALUES ('6210 §31c', 3, 1);
 INSERT INTO mitgliederportrait_antwort (antwort, fk_frage, fk_mitglied) VALUES ('Die esch so gheim, die könn ned emou ech', 4, 1);
 INSERT INTO mitgliederportrait_antwort (antwort, fk_frage, fk_mitglied) VALUES ('Ha bes jetzt no nüd gfonde', 5, 1);
