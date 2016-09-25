@@ -75,7 +75,7 @@ class Register {
                     return $response->write(file_get_contents('./images/mitglied/1617/'.$img));
                 }
                 $response = $response->withHeader('Content-Type', 'image/png');
-                return $response->write(file_get_contents('./images/mitglied/default.png'));
+                return $response->write(file_get_contents('./images/mitglied/1617/default.png'));
             })->setName('mitglied.bild');
             $this->get('/bild/{id}/{type}/small', function ($request, $response, $args) {
                 $img = $args['id'] . $args['type'] . '.jpg';
@@ -84,7 +84,7 @@ class Register {
                     return $response->write(file_get_contents('./images/mitglied/1617/small/'.$img));
                 }
                 $response = $response->withHeader('Content-Type', 'image/png');
-                return $response->write(file_get_contents('./images/mitglied/small/default.png'));
+                return $response->write(file_get_contents('./images/mitglied/small/1617/default.png'));
             })->setName('mitglied.bild.small');
         });
     }

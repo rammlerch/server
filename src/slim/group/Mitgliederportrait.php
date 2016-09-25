@@ -58,7 +58,7 @@ class Mitgliederportrait {
             });
             $this->get('/{id:[0-9]+}/antworten', function ($request, $response, $args) {
                 $res = DB::instance()->fetchRowMany('SELECT * FROM mitgliederportrait_antwort WHERE fk_mitglied='.$args['id']);
-                $response = $response->withHeader('Content-Type', 'a    pplication/json');
+                $response = $response->withHeader('Content-Type', 'application/json');
                 return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
             });
             $this->put('/{id:[0-9]+}/antworten', function ($request, $response, $args) {
