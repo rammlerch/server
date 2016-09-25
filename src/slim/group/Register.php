@@ -21,7 +21,7 @@ class Register {
                 return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
             });
             $this->get('/{id:[0-9]+}/mitglied', function ($request, $response, $args) {
-                $res = DB::instance()->fetchRowMany('SELECT id, vorname, nachname, spitzname, eintritt FROM mitglied WHERE fk_instrument=:id ORDER BY vorname, nachname', ['id' => $args['id']]);
+                $res = DB::instance()->fetchRowMany('SELECT id, vorname, nachname, spitzname, eintritt FROM mitglied WHERE fk_instrument=:id AND fk_status IN (1,2) ORDER BY vorname, nachname', ['id' => $args['id']]);
                 for($i = 0; $i < count($res); $i++) {
                     $res[$i]['name'] = $res[$i]['vorname'] . " " . $res[$i]['nachname'];
                     $res[$i]['url'] = $this->router->pathFor('register.bild', ['id' => $res[$i]['id']]);
@@ -34,7 +34,7 @@ class Register {
                 return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
             });
             $this->get('/{name:[a-z]+}/mitglied', function ($request, $response, $args) {
-                $res = DB::instance()->fetchRowMany('SELECT m.id, m.vorname, m.nachname, m.spitzname, m.eintritt FROM mitglied as m inner join instrument as i on m.fk_instrument=i.id WHERE lower(i.name)=lower(:name)  ORDER BY m.vorname, m.nachname', ['name' => $args['name']]);
+                $res = DB::instance()->fetchRowMany('SELECT m.id, m.vorname, m.nachname, m.spitzname, m.eintritt FROM mitglied as m inner join instrument as i on m.fk_instrument=i.id WHERE lower(i.name)=lower(:name) AND m.fk_status IN (1,2) ORDER BY m.vorname, m.nachname', ['name' => $args['name']]);
                 for($i = 0; $i < count($res); $i++) {
                     $res[$i]['name'] = $res[$i]['vorname'] . " " . $res[$i]['nachname'];
                     $res[$i]['url'] = $this->router->pathFor('register.bild', ['id' => $res[$i]['id']]);
