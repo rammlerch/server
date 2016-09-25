@@ -84,7 +84,7 @@ class Register {
                     return $response->write(file_get_contents('./images/mitglied/1617/small/'.$img));
                 }
                 $response = $response->withHeader('Content-Type', 'image/png');
-                return $response->write(file_get_contents('./images/mitglied/small/1617/default.png'));
+                return $response->write(file_get_contents('./images/mitglied/1617/small/default.png'));
             })->setName('mitglied.bild.small');
         });
     }
