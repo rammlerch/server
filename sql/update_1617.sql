@@ -37,4 +37,20 @@ INSERT INTO mitgliederportrait_antwort (antwort, fk_frage, fk_mitglied) VALUES (
 INSERT INTO mitgliederportrait_antwort (antwort, fk_frage, fk_mitglied) VALUES ('Die esch so gheim, die könn ned emou ech', 4, 1);
 INSERT INTO mitgliederportrait_antwort (antwort, fk_frage, fk_mitglied) VALUES ('Ha bes jetzt no nüd gfonde', 5, 1);
 
-### TODO: Auftritte hinzufügen
+INSERT INTO agenda (start, name, ort) VALUES
+  ('2016-11-05', 'Fasnachtseröffnung', 'Hildisrieden'),
+  ('2017-01-07', 'Fasnachtseröffnung', 'Schlierbach'),
+  ('2017-01-14', 'Näburuuggers Monster', 'Mosen'),
+  ('2017-01-21', 'All-Ball', 'Schlierbach'),
+  ('2017-01-28', 'RememberMe', 'Eich'),
+  ('2017-02-04', 'Suuger-Ball', 'Triengen'),
+  ('2017-02-11', 'BTS Ball', 'Schwarzenbach'),
+  ('2017-02-18', 'GuuggerNight', 'Sursee'),
+  ('2017-02-23', 'SchmuDo', 'Sempach'),
+  ('2017-02-24', 'Narrenball', 'Schötz'),
+  ('2017-02-27', 'Easyball', 'Geuensee'),
+  ('2017-02-28', 'Umzug / Uslompete', 'Triengen');
+INSERT INTO agenda (start, name, ort, ordnung) VALUES
+  ('2017-02-25', 'Städtlifasnacht', 'Sursee', 3),
+  ('2017-02-25', 'Zunftball', 'Schlierbach', 5),
+  ('2017-02-26', 'Umzug', 'Schlierbach', 7);
