@@ -54,3 +54,28 @@ INSERT INTO agenda (start, name, ort, ordnung) VALUES
   ('2017-02-25', 'Städtlifasnacht', 'Sursee', 3),
   ('2017-02-25', 'Zunftball', 'Schlierbach', 5),
   ('2017-02-26', 'Umzug', 'Schlierbach', 7);
+
+  ALTER TABLE galerie DROP INDEX name;
+
+  INSERT INTO galerie (datum, name, ort) VALUES
+    ('2016-09-23', 'OV', 'Schlierbach'),
+    ('2016-11-05', 'Fasnachtseröffnung', 'Hildisrieden'),
+    ('2016-12-03', 'Probeweekend', 'Schlierbach'),
+    ('2017-01-07', 'Fasnachtseröffnung', 'Schlierbach'),
+    ('2017-01-14', 'Näburuuggers Monster', 'Mosen'),
+    ('2017-01-21', 'All-Ball', 'Schlierbach'),
+    ('2017-01-28', 'RememberMe', 'Eich'),
+    ('2017-02-04', 'Suuger-Ball', 'Triengen'),
+    ('2017-02-11', 'BTS Ball', 'Schwarzenbach'),
+    ('2017-02-18', 'GuuggerNight', 'Sursee'),
+    ('2017-02-22', 'Rammlerball', 'Schlierbach'),
+    ('2017-02-23', 'SchmuDo', 'Sempach'),
+    ('2017-02-24', 'Narrenball', 'Schötz'),
+    ('2017-02-27', 'Easyball', 'Geuensee'),
+    ('2017-02-28', 'Umzug / Uslompete', 'Triengen');
+
+  INSERT INTO galerie (datum, name, ort, ordnung) VALUES
+    ('2017-02-25', 'Städtlifasnacht', 'Sursee', 3),
+    ('2017-02-25', 'Zunftball', 'Schlierbach', 5),
+    ('2017-02-26', 'Rammlerstöbli', 'Schlierbach', 5),
+    ('2017-02-26', 'Umzug', 'Schlierbach', 7);
