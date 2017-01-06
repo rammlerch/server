@@ -46,7 +46,7 @@ class RammlerDerWoche {
             });
             $this->put('/nomination/aktuell', function ($request, $response, $args) {
                 $data = $request->getParsedBody();
-                if("35JohrRammler" != $data['passwort']) {
+                if("District-6231" != $data['passwort']) {
                     $response = $response->withStatus(403);
                 } else {
                     VotingHelper::nominate($data);
