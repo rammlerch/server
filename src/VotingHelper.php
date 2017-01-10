@@ -64,7 +64,8 @@ class VotingHelper {
         $res_stimme = DB::instance()->fetchRowMany($sql, ['umfrage' => $voteId]);
         for($i = 0; $i < count($res_stimme); $i++) {
             $stimmen_count += $res_stimme[$i]['stimmen'];
-            $res_stimme[$i]['thumbUrl'] = $app->router->pathFor('register.thumb', ['id' => $res_stimme[$i]['mid']]);
+            $type = $i%2 == 0 ? "r" : "l";
+            $res_stimme[$i]['thumbUrl'] = $app->router->pathFor('mitglied.bild.small', ['id' => $res_stimme[$i]['mid'], 'type' => $type]);
             $res_stimme[$i]['name'] = $res_stimme[$i]['vorname'] . " " . $res_stimme[$i]['nachname'];
             if($max < $res_stimme[$i]['stimmen']) {
                 $max = $res_stimme[$i]['stimmen'];
