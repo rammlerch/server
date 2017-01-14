@@ -42,7 +42,7 @@ class VotingHelper {
 
     private static function getWinner($id, $app) {
         $res = DB::instance()->fetchRow('SELECT e.*, count(s.id) AS stimmen FROM umfrage_eintrag AS e LEFT JOIN umfrage_stimme AS s ON e.id=s.fk_eintrag WHERE e.fk_umfrage=:id GROUP BY e.id ORDER BY stimmen DESC LIMIT 1',  ['id' => $id]);
-        $res['thumbUrl'] = $app->router->pathFor('register.thumb', ['id' => $res['foreign_id']]);
+        $res['thumbUrl'] = $app->router->pathFor('mitglied.bild.small', ['id' => $res['foreign_id'], 'type' => 'l']);
         return $res;
     }
 
