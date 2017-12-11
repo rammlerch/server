@@ -34,7 +34,7 @@ class Mitgliederportrait {
                 $response = $response->withHeader('Content-Type', 'application/json');
                 return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
             });
-            $this->get('/{id:[0-9]+}/{type:[lr]}', function ($request, $response, $args) {
+            $this->get('/{id:[0-9]+}', function ($request, $response, $args) {
                 $res = DB::instance()->fetchRow(Mitgliederportrait::$mitgliederportrait_sql . ' WHERE m.id=:id', ['id' => $args['id']]);
 
                 $res['fragebogen'] = DB::instance()->fetchRowMany(
@@ -44,18 +44,18 @@ class Mitgliederportrait {
                     ORDER BY f.id;'
                     , ['id' => $args['id']]);
 
-                $res['image'] = $this->router->pathFor('mitglied.bild', ['id' => $res['id'], 'type' => $args['type']]);
+                //$res['image'] = $this->router->pathFor('mitglied.bild', ['id' => $res['id'], 'type' => $args['type']]);
 
                 $response = $response->withHeader('Content-Type', 'application/json');
                 return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
             })->setName('mitgliederportrait');
             $this->get('/fragen', function ($request, $response, $args) {
-                $res = DB::instance()->fetchRowMany('SELECT * FROM mitgliederportrait_frage');
+                $res = DB::instance()->fetchRowMany('SELECT * FROM mitgliederportrait_frage WHERE fk_saison=2');
                 $response = $response->withHeader('Content-Type', 'application/json');
                 return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
             });
             $this->get('/{id:[0-9]+}/antworten', function ($request, $response, $args) {
-                $res = DB::instance()->fetchRowMany('SELECT * FROM mitgliederportrait_antwort WHERE fk_mitglied='.$args['id']);
+                $res = DB::instance()->fetchRowMany('SELECT * FROM mitgliederportrait_antwort WHERE fk_saison=2 AND fk_mitglied='.$args['id']);
                 $response = $response->withHeader('Content-Type', 'application/json');
                 return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
             });
