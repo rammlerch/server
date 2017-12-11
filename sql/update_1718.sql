@@ -31,7 +31,7 @@ UPDATE mitglied SET fk_status = 4 WHERE id IN (17, 27, 35, 37, 41);
 INSERT INTO mitglied (vorname, nachname, eintritt, fk_instrument, fk_status) VALUES ('Nora', 'Polesel', '2017/2018', 2, 2);
 INSERT INTO mitglied (vorname, nachname, eintritt, fk_instrument, fk_status) VALUES ('Adrian', 'Küng', '2017/2018', 5, 2);
 INSERT INTO mitglied (vorname, nachname, eintritt, fk_instrument, fk_status) VALUES ('Manuela', 'Habermacher', '2017/2018', 3, 2);
-INSERT INTO mitglied (vorname, nachname, eintritt, fk_instrument, fk_status) VALUES ('Dominik', 'Schwegler', '2017/2018', 3, 2);
+INSERT INTO mitglied (vorname, nachname, eintritt, fk_instrument, fk_status) VALUES ('Tobias', 'Schwegler', '2017/2018', 3, 2);
 INSERT INTO mitglied (vorname, nachname, eintritt, fk_instrument, fk_status) VALUES ('Raphael', 'Troxler', '2017/2018', 7, 2);
 INSERT INTO mitglied (vorname, nachname, eintritt, fk_instrument, fk_status) VALUES ('Severin', 'Troxler', '2017/2018', 7, 2);
 
