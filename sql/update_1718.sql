@@ -25,6 +25,7 @@ INSERT INTO mitgliederportrait_frage (frage, fk_saison) VALUE ('Wenn du ei Monet
 INSERT INTO mitgliederportrait_frage (frage, fk_saison) VALUE ('Was esch dis Lieblingsschläckzüg', 2);
 
 UPDATE mitglied SET fk_status = 1 WHERE fk_status=2;
+UPDATE mitglied SET fk_status = 1 WHERE id IN (48, 50);
 UPDATE mitglied SET fk_status = 3 WHERE id IN (34);
 UPDATE mitglied SET fk_status = 4 WHERE id IN (17, 27, 35, 37, 41);
 
