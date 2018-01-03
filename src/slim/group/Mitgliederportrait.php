@@ -24,7 +24,7 @@ class Mitgliederportrait {
 
     private function initRoute() {
         $this->app->group('/ch/rammler/mitgliederportrait', function () {
-            $this->get('/', function ($request, $response, $args) {
+            $this->get('', function ($request, $response, $args) {
                 $res = DB::instance()->fetchRowMany(Mitgliederportrait::$mitgliederportrait_sql . ' WHERE fk_status IN (1,2)');
                 for($i = 0; $i < count($res); $i++) {
                     $type = $i%2 == 0 ? "r" : "l";
@@ -44,7 +44,7 @@ class Mitgliederportrait {
                     ORDER BY f.id;'
                     , ['id' => $args['id']]);
 
-                //$res['image'] = $this->router->pathFor('mitglied.bild', ['id' => $res['id'], 'type' => $args['type']]);
+                $res['image'] = $this->router->pathFor('mitglied.bild', ['id' => $res['id']]);
 
                 $response = $response->withHeader('Content-Type', 'application/json');
                 return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));

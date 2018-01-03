@@ -39,3 +39,24 @@ INSERT INTO mitglied (vorname, nachname, eintritt, fk_instrument, fk_status) VAL
 UPDATE mitglied SET fk_instrument=5 WHERE id=54;
 UPDATE mitglied SET fk_instrument=7 WHERE id=4;
 
+
+TRUNCATE umfrage_stimme;
+TRUNCATE umfrage_eintrag;
+TRUNCATE umfrage_nomination;
+TRUNCATE umfrage_nomination_zeit;
+TRUNCATE umfrage;
+
+
+INSERT INTO umfrage (titel, start, ende) VALUES
+  ('Rammler der Woche 1', '2018-01-10 08:00:00', '2018-01-12 18:00:00'),
+  ('Rammler der Woche 2', '2018-01-17 08:00:00', '2018-01-19 18:00:00'),
+  ('Rammler der Woche 3', '2018-01-24 08:00:00', '2018-01-26 18:00:00'),
+  ('Rammler der Woche 4', '2018-01-31 08:00:00', '2018-02-02 18:00:00'),
+  ('Rammler der Woche 5', '2018-02-06 08:00:00', '2018-02-07 17:00:00');
+
+INSERT INTO umfrage_nomination_zeit (start, ende, fk_umfrage) VALUES
+  ('2018-01-06 08:00:00', '2018-01-09 18:00:00', 1),
+  ('2018-01-13 08:00:00', '2018-01-19 18:00:00', 2),
+  ('2018-01-20 08:00:00', '2018-01-26 18:00:00', 3),
+  ('2018-01-27 08:00:00', '2018-02-01 18:00:00', 4),
+  ('2018-02-03 08:00:00', '2018-02-05 18:00:00', 5);
