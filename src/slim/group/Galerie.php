@@ -15,21 +15,25 @@ class Galerie {
 
     private function initRoute() {
         $this->app->group('/ch/rammler/galerie', function () {
-            $this->get('/', function ($request, $response, $args) {
-                $res = DB::instance()->fetchRowMany('SELECT g.id, g.name, g.ort, count(b.id) AS bilder FROM galerie AS g LEFT JOIN bild AS b ON g.id=b.fk_galerie GROUP BY g.id ORDER BY g.datum DESC');
-                $response = $response->withHeader('Content-Type', 'application/json');
-                return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
+            $this->get('/saison', function ($request, $response, $args) {
+                $res = DB::instance()->fetchRowMany('SELECT s.* FROM saison AS s 
+                  LEFT JOIN galerie AS g ON s.id=g.fk_saison 
+                  GROUP BY s.id HAVING count(g.id) > 0 ORDER BY s.jahr DESC;');
+                for($i = 0; $i < count($res); $i++) {
+                    $res[$i]['galerie'] = $this->router->pathFor('galerie.saison', ['saison' => $res[$i]['id']]);
+                }
+                return $response->withJson($res);
             });
-            $this->get('/aktiv', function ($request, $response, $args) {
+            $this->get('/saison/{saison:[0-9]+}', function ($request, $response, $args) {
                 $res = DB::instance()->fetchRowMany('SELECT g.id, g.name, g.ort, b.name AS bild_name 
-                  FROM galerie AS g LEFT JOIN bild AS b ON g.id=b.fk_galerie WHERE b.id > 0 GROUP BY g.id ORDER BY g.datum DESC');
-                $response = $response->withHeader('Content-Type', 'application/json');
+                  FROM galerie AS g LEFT JOIN bild AS b ON g.id=b.fk_galerie WHERE b.id > 0 AND g.fk_saison=:saison 
+                  GROUP BY g.id ORDER BY g.datum DESC', $args);
                 for($i = 0; $i < count($res); $i++) {
                     $res[$i]['thumbUrl'] = $this->router->pathFor('galerie.thumb', ['galerie' => $res[$i]['id'], 'name' => $res[$i]['bild_name']]);
                 }
-                return $response->write(json_encode($res, JSON_UNESCAPED_SLASHES));
-            });
-            $this->get('/{id}', function ($request, $response, $args) {
+                return $response->withJson($res);
+            })->setName('galerie.saison');
+            $this->get('/{id:[0-9]+}', function ($request, $response, $args) {
                 $response = $response->withHeader('Content-Type', 'application/json');
                 $res = DB::instance()->fetchRow('SELECT id, name FROM galerie WHERE id=:id', ['id' => $args['id']]);
                 $res_bilder = DB::instance()->fetchRowMany('SELECT id, name FROM bild WHERE fk_galerie=:id ORDER BY datum ASC', ['id' => $res['id']]);
