@@ -26,7 +26,7 @@ class Mitglied {
                 return $response->write(file_get_contents($img));
             })->setName('mitglied.bild');
             $this->get('/thumb/{id}', function ($request, $response, $args) {
-                $img = '../galerie/mitglieder/1718/t/'. $args['id'] . '.jpg';
+                $img = '../galerie/mitglieder/1718/thumbs/'. $args['id'] . '.jpg';
                 $response = $response->withHeader('Content-Type', 'image/jpeg');
                 return $response->write(file_get_contents($img));
             })->setName('mitglied.bild.small');
