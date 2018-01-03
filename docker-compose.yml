@@ -1,0 +1,21 @@
+version: '2'
+services:
+  apache:
+    build: docker/web
+    ports:
+     - "1080:80"
+    volumes:
+     - .:/var/www/html
+     - ../galerie:/var/www/galerie
+  db:
+    build: docker/db
+    ports:
+     - "3306:3306"
+    volumes:
+      - ./docker/volumes/db:/var/lib/mysql
+    restart: always
+    environment:
+       MYSQL_ROOT_PASSWORD: root
+       MYSQL_DATABASE: rammler
+       MYSQL_USER: rammler_user
+       MYSQL_PASSWORD: rammler_password

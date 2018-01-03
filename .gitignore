@@ -11,3 +11,6 @@ composer.phar
 
 # npm
 node_modules/
+
+# docker
+docker/volumes

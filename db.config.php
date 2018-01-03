@@ -1,7 +1,7 @@
 <?php
 $config = array(
-    'host'       => 'localhost',
-    'user'       => 'root',
-    'password'   => 'root',
-    'database'   => 'rammler2015',
+    'host'       => 'db',
+    'user'       => 'rammler_user',
+    'password'   => 'rammler_password',
+    'database'   => 'rammler',
 );
