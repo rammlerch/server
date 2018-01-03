@@ -29,7 +29,6 @@ gulp.task('deploy', function() {
     
 
     var globs = [
-        'images/**',
         'src/**',
         'vendor/**',
         '.htaccess',
