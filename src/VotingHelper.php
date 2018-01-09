@@ -86,7 +86,7 @@ class VotingHelper {
     }
 
     public static function getNomination($id) {
-        $array = DB::instance()->fetchRowMany('SELECT m.id, m.nachname, m.vorname FROM mitglied AS m RIGHT JOIN umfrage_nomination AS n ON m.id=n.fk_mitglied WHERE n.fk_umfrage=:id GROUP BY m.id', ["id" => $id);
+        $array = DB::instance()->fetchRowMany('SELECT m.id, m.nachname, m.vorname FROM mitglied AS m RIGHT JOIN umfrage_nomination AS n ON m.id=n.fk_mitglied WHERE n.fk_umfrage=:id GROUP BY m.id', ["id" => $id]);
         foreach($array AS &$nom) {
             $nom['text'] = DB::instance()->fetchColumnMany('SELECT text FROM umfrage_nomination WHERE fk_mitglied=:id', ["id" => $nom["id"]]);
         }
