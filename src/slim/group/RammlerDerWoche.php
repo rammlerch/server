@@ -28,6 +28,10 @@ class RammlerDerWoche {
                 $res = VotingHelper::getActiveVoteList($this);
                 return $response->withJson($res);
             });
+            $this->get('/nomination/{id:[0-9]+}', function ($request, $response, $args) {
+                $res = VotingHelper::getNomination($args['id']);
+                return $response->withJson($res);
+            });
             $this->get('/nomination/aktuell', function ($request, $response, $args) {
                 $res = VotingHelper::getActualNomination();
                 return $response->withJson($res);
