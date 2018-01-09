@@ -82,7 +82,7 @@ class VotingHelper {
 
     public static function getActualNomination() {
         $array['id'] = DB::instance()->fetchColumn('SELECT id FROM umfrage_nomination_zeit WHERE (NOW() > start AND  NOW() < ende)');
-        $array['nominiert'] = DB::instance()->fetchRowMany('SELECT m.id, m.name, m.vorname FROM mitglied AS m RIGHT JOIN umfrage_nomination AS n ON m.id=n.fk_mitglied WHERE n.fk_umfrage=:id GROUP BY m.id', $array);
+        $array['nominiert'] = DB::instance()->fetchRowMany('SELECT m.id, m.nachname, m.vorname FROM mitglied AS m RIGHT JOIN umfrage_nomination AS n ON m.id=n.fk_mitglied WHERE n.fk_umfrage=:id GROUP BY m.id', $array);
         foreach($array['nominiert'] AS $nom) {
             $nom['text'] = DB::instance()->fetchColumnMany('SELECT text FROM umfrage_nomination WHERE fk_mitglied=:id', $nom);
         }
