@@ -61,7 +61,7 @@ class DateHelper {
                 case 2:
                     return "Februar";
                 case 3:
-                    return "M&auml;rz";
+                    return "März";
                 case 4:
                     return "April";
                 case 5:
@@ -88,7 +88,7 @@ class DateHelper {
                 case 2:
                     return "Feb";
                 case 3:
-                    return "M&auml;r";
+                    return "Mär";
                 case 4:
                     return "Apr";
                 case 5:
